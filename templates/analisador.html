@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block titulo %}Analisador Poético · Dashboard Multimédia com IA{% endblock %}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+    <p class="etiqueta">Widget 1</p>
+    <h1>Analisador <span class="gradiente">Poético/Semântico</span></h1>
+    <p class="hero-texto">Escreve ou cola um poema e carrega em "Analisar texto".</p>
+</section>
+
+<!-- A. CAIXA DE TEXTO -->
+<section class="cartao cartao-largo">
+    <form method="post" action="{{ url_for('analisador') }}" id="formulario">
+        <label for="texto" class="rotulo">O teu texto</label>
+        <textarea id="texto" name="texto" rows="9" maxlength="{{ limite + 1000 }}"
+                  placeholder="Escreve ou cola aqui o poema...">{{ texto }}</textarea>
+
+        <div class="barra-acoes">
+            <p class="contador">
+                <span id="contador-caracteres">0</span> caracteres ·
+                <span id="contador-palavras">0</span> palavras
+                <span class="limite">(limite: {{ limite }})</span>
+            </p>
+            <div class="botoes">
+                <button type="button" class="botao botao-secundario" id="botao-limpar">Limpar</button>
+                <button type="submit" class="botao botao-principal">Analisar texto</button>
+            </div>
+        </div>
+    </form>
+
+    {% if erro %}
+    <div class="mensagem mensagem-erro" role="alert">{{ erro }}</div>
+    {% endif %}
+</section>
+
+{% if estatisticas %}
+<!-- B. ANÁLISE ESTATÍSTICA -->
+<section class="secao">
+    <h2>📊 Análise estatística</h2>
+
+    <div class="grelha-metricas">
+        <div class="metrica">
+            <span class="metrica-valor">{{ estatisticas.total_palavras }}</span>
+            <span class="metrica-nome">Palavras</span>
+        </div>
+        <div class="metrica">
+            <span class="metrica-valor">{{ estatisticas.total_caracteres }}</span>
+            <span class="metrica-nome">Caracteres</span>
+        </div>
+        <div class="metrica">
+            <span class="metrica-valor">{{ estatisticas.palavras_diferentes }}</span>
+            <span class="metrica-nome">Palavras diferentes</span>
+        </div>
+    </div>
+
+    <div class="cartao cartao-largo">
+        <h3>As 10 palavras mais frequentes</h3>
+        {% if estatisticas.top10 %}
+        {% set maximo = estatisticas.top10[0][1] %}
+        <ul class="lista-frequencias">
+            {% for palavra, quantidade in estatisticas.top10 %}
+            <li>
+                <span class="freq-posicao">{{ loop.index }}</span>
+                <span class="freq-palavra">{{ palavra }}</span>
+                <span class="freq-barra">
+    <span style="--largura: {{ (quantidade / maximo * 100) | round | int }}%;"></span>
+</span>
+                <span class="freq-valor">{{ quantidade }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="texto-suave">O texto só tem palavras comuns, por isso não há frequências a mostrar.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- C. ANÁLISE SEMÂNTICA COM IA -->
+<section class="secao">
+    <h2>🧠 Análise semântica com IA</h2>
+
+    {% if aviso_ia %}
+    <div class="mensagem mensagem-aviso" role="status">{{ aviso_ia }}</div>
+    {% endif %}
+
+    {% if analise_ia %}
+    <div class="grelha-ia">
+        <article class="cartao">
+            <h3>Significado geral</h3>
+            <p>{{ analise_ia.significado_geral }}</p>
+        </article>
+
+        <article class="cartao">
+            <h3>Tom emocional</h3>
+            <p>{{ analise_ia.tom_emocional }}</p>
+        </article>
+
+        <article class="cartao">
+            <h3>Temas principais</h3>
+            <div class="etiquetas">
+                {% for tema in analise_ia.temas %}
+                <span class="etiqueta-chip">{{ tema }}</span>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="cartao">
+            <h3>Palavras-chave</h3>
+            <div class="etiquetas">
+                {% for chave in analise_ia.palavras_chave %}
+                <span class="etiqueta-chip etiqueta-chip-alt">{{ chave }}</span>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="cartao cartao-largo">
+            <h3>Interpretação das ideias</h3>
+            <p>{{ analise_ia.interpretacao }}</p>
+        </article>
+    </div>
+    {% endif %}
+</section>
+
+<!-- D. NUVEM DE PALAVRAS -->
+<section class="secao">
+    <h2>☁️ Nuvem de palavras</h2>
+
+    {% if aviso_nuvem %}
+    <div class="mensagem mensagem-aviso" role="status">{{ aviso_nuvem }}</div>
+    {% endif %}
+
+    {% if nuvem %}
+    <div class="cartao cartao-largo">
+        <img class="imagem-nuvem"
+             src="{{ url_for('static', filename='generated/' + nuvem) }}"
+             alt="Nuvem de palavras gerada a partir do texto">
+        <p class="texto-suave">As palavras mais frequentes aparecem com maior dimensão.</p>
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // JavaScript apenas para as interações: contador e botão "Limpar"
+    const caixaTexto = document.getElementById("texto");
+    const contadorCaracteres = document.getElementById("contador-caracteres");
+    const contadorPalavras = document.getElementById("contador-palavras");
+    const botaoLimpar = document.getElementById("botao-limpar");
+
+    function atualizarContadores() {
+        const texto = caixaTexto.value;
+        const palavras = texto.trim() === "" ? 0 : texto.trim().split(/\s+/).length;
+        contadorCaracteres.textContent = texto.length;
+        contadorPalavras.textContent = palavras;
+    }
+
+    caixaTexto.addEventListener("input", atualizarContadores);
+
+    botaoLimpar.addEventListener("click", function () {
+        caixaTexto.value = "";
+        atualizarContadores();
+        caixaTexto.focus();
+    });
+
+    atualizarContadores();
+</script>
+{% endblock %}

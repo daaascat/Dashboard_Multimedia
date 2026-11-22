@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Dashboard Multimédia com IA{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="fundo-brilho" aria-hidden="true"></div>
+
+    <header class="topo">
+        <a class="logo" href="{{ url_for('index') }}">
+            <span class="logo-icone">✦</span> Multimédia<span class="logo-destaque">IA</span>
+        </a>
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('analisador') }}">Analisador Poético</a>
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer class="rodape">
+        Oficina de Multimédia · 12.º ano · Dashboard Web de Ferramentas Multimédia com IA
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

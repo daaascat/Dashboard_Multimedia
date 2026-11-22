@@ -1,0 +1,294 @@
+/* =====================================================
+   Widget 1 - Analisador Poético/Semântico
+   Tema escuro: roxo, azul e detalhes luminosos
+   ===================================================== */
+
+:root {
+    --fundo: #0b0820;
+    --cartao: #161233;
+    --cartao-claro: #1f1a45;
+    --borda: #2d2760;
+    --texto: #ece9ff;
+    --texto-suave: #a8a2d6;
+    --roxo: #8b5cf6;
+    --azul: #3b82f6;
+    --luz: #22d3ee;
+    --erro: #fb7185;
+    --aviso: #fbbf24;
+    --raio: 18px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+/* Brilho decorativo no fundo */
+.fundo-brilho {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(600px circle at 15% 10%, rgba(139, 92, 246, 0.25), transparent 60%),
+        radial-gradient(700px circle at 90% 20%, rgba(59, 130, 246, 0.22), transparent 60%),
+        radial-gradient(500px circle at 50% 100%, rgba(34, 211, 238, 0.10), transparent 60%);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Topo ---------- */
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 18px 5vw;
+    border-bottom: 1px solid var(--borda);
+    background: rgba(11, 8, 32, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo { font-size: 1.3rem; font-weight: 700; }
+.logo-icone { color: var(--luz); }
+.logo-destaque { color: var(--roxo); }
+
+.menu { display: flex; gap: 8px; }
+.menu a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: var(--texto-suave);
+    transition: background 0.2s, color 0.2s;
+}
+.menu a:hover { background: var(--cartao-claro); color: var(--texto); }
+
+/* ---------- Estrutura ---------- */
+.conteudo {
+    flex: 1;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 5vw 60px;
+}
+
+.rodape {
+    text-align: center;
+    padding: 20px;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--borda);
+}
+
+/* ---------- Títulos ---------- */
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin: 8px 0 16px; }
+h2 { font-size: 1.5rem; margin: 0 0 18px; }
+h3 { margin: 0 0 10px; font-size: 1.05rem; color: var(--luz); }
+
+.gradiente {
+    background: linear-gradient(90deg, var(--roxo), var(--azul), var(--luz));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.etiqueta {
+    display: inline-block;
+    margin: 0;
+    padding: 4px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 999px;
+    background: var(--cartao);
+    color: var(--luz);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+}
+
+.hero { text-align: center; padding: 30px 0 40px; }
+.hero-texto { color: var(--texto-suave); max-width: 600px; margin: 0 auto 24px; }
+.cabecalho-pagina { text-align: center; margin-bottom: 28px; }
+
+/* ---------- Cartões ---------- */
+.cartao {
+    background: var(--cartao);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 22px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.cartao:hover { border-color: var(--roxo); }
+.cartao p { margin: 0; }
+.cartao-largo { grid-column: 1 / -1; }
+.cartao-icone { font-size: 2rem; margin-bottom: 8px; }
+
+.grelha-cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+.grelha-cartoes .cartao:hover { transform: translateY(-4px); }
+
+.grelha-ia {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.secao { margin-top: 44px; }
+
+/* ---------- Formulário ---------- */
+.rotulo { display: block; margin-bottom: 8px; font-weight: 600; }
+
+textarea {
+    width: 100%;
+    padding: 16px;
+    background: var(--cartao-claro);
+    color: var(--texto);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    font: inherit;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+textarea:focus {
+    outline: none;
+    border-color: var(--roxo);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+.barra-acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 14px;
+}
+.contador { color: var(--texto-suave); font-size: 0.9rem; }
+.limite { opacity: 0.7; }
+.botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- Botões ---------- */
+.botao {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.botao:hover { transform: translateY(-2px); }
+
+.botao-principal {
+    background: linear-gradient(90deg, var(--roxo), var(--azul));
+    color: #fff;
+}
+.botao-principal:hover { box-shadow: 0 8px 24px rgba(139, 92, 246, 0.45); }
+
+.botao-secundario {
+    background: transparent;
+    color: var(--texto);
+    border-color: var(--borda);
+}
+.botao-secundario:hover { background: var(--cartao-claro); border-color: var(--roxo); }
+
+/* ---------- Mensagens ---------- */
+.mensagem {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid;
+}
+.mensagem-erro { color: var(--erro); background: rgba(251, 113, 133, 0.1); border-color: var(--erro); }
+.mensagem-aviso { color: var(--aviso); background: rgba(251, 191, 36, 0.08); border-color: var(--aviso); margin-top: 0; }
+
+/* ---------- Métricas ---------- */
+.grelha-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.metrica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: var(--cartao);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+}
+.metrica-valor {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--roxo), var(--luz));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.metrica-nome { color: var(--texto-suave); font-size: 0.9rem; }
+
+/* ---------- Lista de frequências ---------- */
+.lista-frequencias { list-style: none; margin: 0; padding: 0; }
+.lista-frequencias li {
+    display: grid;
+    grid-template-columns: 28px minmax(80px, 160px) 1fr 40px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--borda);
+}
+.lista-frequencias li:last-child { border-bottom: none; }
+.freq-posicao { color: var(--texto-suave); font-size: 0.85rem; }
+.freq-palavra { font-weight: 600; overflow-wrap: anywhere; }
+.freq-barra { height: 8px; background: var(--cartao-claro); border-radius: 999px; overflow: hidden; }
+.freq-barra span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--roxo), var(--luz));
+    border-radius: 999px;
+}
+.freq-valor { text-align: right; color: var(--luz); font-weight: 600; }
+
+/* ---------- Etiquetas (chips) ---------- */
+.etiquetas { display: flex; flex-wrap: wrap; gap: 8px; }
+.etiqueta-chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(139, 92, 246, 0.18);
+    border: 1px solid var(--roxo);
+    font-size: 0.9rem;
+}
+.etiqueta-chip-alt { background: rgba(34, 211, 238, 0.12); border-color: var(--luz); }
+
+/* ---------- Nuvem ---------- */
+.imagem-nuvem {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    margin-bottom: 12px;
+}
+.texto-suave { color: var(--texto-suave); font-size: 0.9rem; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 600px) {
+    .conteudo { padding-top: 24px; }
+    .botoes { width: 100%; }
+    .botoes .botao { flex: 1; text-align: center; }
+    .lista-frequencias li { grid-template-columns: 24px 1fr 36px; }
+    .freq-barra { display: none; }
+    .grelha-ia { grid-template-columns: 1fr; }
+}

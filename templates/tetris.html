@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d18">
+  <title>Tetris | Dashboard Multimédia</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tetris.css') }}">
+  <script src="{{ url_for('static', filename='js/tetris.js') }}" defer></script>
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="back-link" href="/">← Voltar ao dashboard</a>
+      <span class="project-label">DASHBOARD MULTIMÉDIA</span>
+    </header>
+
+    <section class="game-layout" aria-label="Jogo Tetris">
+      <div class="intro">
+        <p class="eyebrow">ARCADE · WIDGET 03</p>
+        <h1>Tetris<span>.</span></h1>
+        <p class="subtitle">
+          Completa linhas, soma pontos e tenta superar o teu recorde.
+        </p>
+
+        <div class="stats" aria-live="polite">
+          <div class="stat-card">
+            <span class="stat-label">Pontuação</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Nível</span>
+            <strong id="level">1</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Linhas</span>
+            <strong id="lines">0</strong>
+          </div>
+        </div>
+
+        <div class="game-buttons">
+          <button id="start-button" class="button button-primary" type="button">
+            Iniciar jogo
+          </button>
+          <button id="pause-button" class="button button-secondary" type="button" disabled>
+            Pausar
+          </button>
+          <button id="restart-button" class="button button-secondary" type="button">
+            Reiniciar
+          </button>
+        </div>
+
+        <section class="instructions">
+          <h2>Controlos</h2>
+          <p><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>↑</kbd> rodar</p>
+          <p><kbd>↓</kbd> descer · <kbd>Espaço</kbd> queda rápida</p>
+          <p><kbd>P</kbd> pausar ou continuar</p>
+        </section>
+      </div>
+
+      <div class="board-column">
+        <section class="next-piece-card" aria-label="Próxima peça">
+          <div>
+            <span class="stat-label">Próxima peça</span>
+            <span class="next-piece-hint">Prepara a tua jogada</span>
+          </div>
+          <canvas id="next-canvas" width="120" height="90"
+                  aria-label="Pré-visualização da próxima peça"></canvas>
+        </section>
+
+        <div class="board-frame">
+          <canvas id="game-canvas" width="300" height="600"
+                  aria-label="Tabuleiro de Tetris com 10 colunas e 20 linhas"></canvas>
+
+          <div id="game-overlay" class="game-overlay">
+            <div>
+              <p id="overlay-kicker" class="overlay-kicker">ARCADE</p>
+              <h2 id="overlay-title">Começa a jogar</h2>
+              <p id="overlay-message">Carrega em “Iniciar jogo” para começar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="touch-controls" aria-label="Controlos no ecrã">
+          <button type="button" data-action="left" aria-label="Mover para a esquerda">←</button>
+          <button type="button" data-action="rotate" aria-label="Rodar peça">↻</button>
+          <button type="button" data-action="right" aria-label="Mover para a direita">→</button>
+          <button type="button" data-action="down" aria-label="Acelerar descida">↓</button>
+          <button type="button" data-action="drop" aria-label="Queda rápida">⇊</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      Feito para o teu espaço de ferramentas multimédia.
+    </footer>
+  </main>
+</body>
+</html>

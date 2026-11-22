@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}Início · Dashboard Multimédia com IA{% endblock %}
+
+{% block conteudo %}
+<section class="hero">
+    <p class="etiqueta">Dashboard Web de Ferramentas Multimédia com IA</p>
+    <h1>Descobre o que um texto <span class="gradiente">realmente diz</span></h1>
+    <p class="hero-texto">
+        Cola um poema ou um texto literário e obtém estatísticas, uma nuvem de
+        palavras e uma interpretação feita por Inteligência Artificial.
+    </p>
+    <a class="botao botao-principal" href="{{ url_for('analisador') }}">Abrir o Analisador →</a>
+</section>
+
+<section class="grelha-cartoes">
+    <article class="cartao">
+        <div class="cartao-icone">📊</div>
+        <h3>Estatísticas</h3>
+        <p>Total de palavras, caracteres, palavras diferentes e o top 10 das mais frequentes.</p>
+    </article>
+    <article class="cartao">
+        <div class="cartao-icone">🧠</div>
+        <h3>Análise com IA</h3>
+        <p>Significado geral, temas, tom emocional, palavras-chave e interpretação.</p>
+    </article>
+    <article class="cartao">
+        <div class="cartao-icone">☁️</div>
+        <h3>Nuvem de palavras</h3>
+        <p>As palavras mais frequentes aparecem maiores, sem as palavras comuns.</p>
+    </article>
+</section>
+{% endblock %}
