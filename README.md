@@ -4,7 +4,7 @@
 **Ano letivo:** 2026/2027  
 **Autor:** José Gonçalo Quitério de Oliveira Redondo  
 **Turma:** B  
-**Link da aplicação web:** http://127.0.0.1:3000/projeto_final_multimedia.html?vscode-livepreview=true  
+**Link da aplicação web:** https://daaascat.github.io/Dashboard_Multimedia/projeto_final_multimedia.html 
 **Proposta escolhida:** Proposta 1
 
 ## 1. Visão geral do projeto
